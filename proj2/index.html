@@ -10,20 +10,20 @@ Take a look at the provided .bzc files and create your own Bezier curve with 6 c
 Filename: bzc/custom1.bzc
 
 	Below are screenshots of each step / level of the evaluation from the original control points down to the final evaluated point. 
-<img src="/cs184project-webpages/proj2/images/task1/task1-step1.png">
+<img src="/cs184project-webpages/proj2/images/task1/task1-step1.png" width = "350" height = "300" >
 	<figcaption>step 1 of curve evaluation.</figcaption>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step2.png" >
+<img src="/cs184project-webpages/proj2/images/task1/task1-step2.png" width = "350" height = "300">
 	<figcaption>step 2 of curve evaluation.</figcaption>
-<img src="/cscs184project-webpages/proj2/images/task1/task1-step3.png">
+<img src="/cscs184project-webpages/proj2/images/task1/task1-step3.png" width = "350" height = "300">
 	<figcaption>step 3 of curve evaluation.</figcaption>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step4.png" >
+<img src="/cs184project-webpages/proj2/images/task1/task1-step4.png" width = "350" height = "300">
 	<figcaption>step 4 of curve evaluation.</figcaption>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step5.png" >
+<img src="/cs184project-webpages/proj2/images/task1/task1-step5.png" width = "350" height = "300">
 	<figcaption>step 5 of curve evaluation.</figcaption>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step5-full.png" >
+<img src="/cs184project-webpages/proj2/images/task1/task1-step5-full.png" width = "350" height = "300">
 	<figcaption>Bezier curve after 5 steps of curve evaluation.</figcaption>
 Below is a screenshot of a slightly different Bezier curve by moving the original control points around and modifying the parameter t via mouse scrolling.
-<img src="/cs184project-webpages/proj2/images/task1/task1-modified-bezier.png" >
+<img src="/cs184project-webpages/proj2/images/task1/task1-modified-bezier.png" width = "350" height = "300">
 	
 	<h1 style="font-size:150%;">Part 2: Bezier surfaces with separable 1D de Casteljau</h1>	
 	<h1 style="font-size:100%;">Extending de Casteljau algorithm to Bezier surfaces and its implementation</h1>
@@ -41,50 +41,50 @@ The de Casteljau algorithm now handles points in 3-dimensions instead of 2-dimen
 
 To implement an area-weighted vertex normal, it is necessary to keep track of total sum of vertex normal, iterate through the vertex’s (v_0) neighboring vertices, and calculate the area of faces incident to v_0 and the perpendicular vector formed by two adjacent vectors sharing the given vertex. This is done by calculating the matrix cross product of the two adjacent vectors from v_0 to get the normal vector of that face, and the norm of the cross product to get the area of the face. In each iteration, update the sum of vertex normal by adding the product of the area of the face and the norm. Lastly, update the sum of the vertex normal as a unit vector and multiply by -1 so that the direction of normal is not facing inside the mesh.
 Here are screenshots of dae/teapot.dae comparing teapot shading with and without vertex normals. 
-	<img src="/cs184project-webpages/proj2/images/task3/task3-before.png">
+	<img src="/cs184project-webpages/proj2/images/task3/task3-before.png" width = "350" height = "300">
 	<figcaption>teapot shading without vertex normals.</figcaption>
 	
-	<img src="/cs184project-webpages/proj2/images/task3/task3-after.png">
+	<img src="/cs184project-webpages/proj2/images/task3/task3-after.png" width = "350" height = "300">
 	<figcaption>teapot shading with vertex normals.</figcaption>
 
 		
 	<h1 style="font-size:150%;">Part 4: Edge flip</h1>
 	<h1 style="font-size:100%;">implementation of the edge flip operation</h1>
 
-<img src="/cs184project-webpages/proj2/images/task4/task4-diagram.png">
+<img src="/cs184project-webpages/proj2/images/task4/task4-diagram.png" width = "300" height = "350">
 	
 The implementation technique of edge flip is based on the “guide to implementing edge operations”. We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the flip and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Next, to flip the edge we have to reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above.
 Here are the screenshots of the teapot before and after some edge flips.
-<img src="/cs184project-webpages/proj2/images/task4/task4-before.png">
+<img src="/cs184project-webpages/proj2/images/task4/task4-before.png"  width = "350" height = "300">
 	<figcaption>teapot before some edge flips.</figcaption>
 	
 	
 The major issue we have faced was whenever we tried to flip an edge, an edge and an outer face was missing. We have speculated that our implementation was incorrect on the outer edges and it turned out that our explicit definition of the outer half-edges formed a quadrilateral rather than outer_edge = outer_edge->next(). Further, when reassigning the outer half-edges, we have to preserve the face and their pointer to the next half-edge.
-	<img src="/cs184project-webpages/proj2/images/task4/task4-after.png">
+	<img src="/cs184project-webpages/proj2/images/task4/task4-after.png"  width = "350" height = "300">
 	<figcaption>teapot after some edge flips.</figcaption>
 	
-	<img src="/cs184project-webpages/proj2/images/task4/task4-interesting.png">
+	<img src="/cs184project-webpages/proj2/images/task4/task4-interesting.png"  width = "350" height = "300">
 	<figcaption>teapot after some edge flips.</figcaption>
 	
 	<h1 style="font-size:150%;">Part 5: Edge split</h1>
 	<h1 style="font-size:100%;">implementation of the edge split operation</h1>	
 
-<img src="/cs184project-webpages/proj2/images/task5/task5-diagram.png">
+<img src="/cs184project-webpages/proj2/images/task5/task5-diagram.png"  width = "300" height = "350">
 	<figcaption>mesh before some edge splits.</figcaption>
 The implementation technique of edge split is based on the “guide to implementing edge operations”. We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the split and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Unlike edge flip, an edge split creates 1 new vertex, 3 new edges, 2 new faces, and 6 new half-edges. Then reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above and ensure that the faces and next pointer of the half-edges of the outer elements are preserved. 
 Here are screenshots of a mesh before and after some edge splits.
-	<img src="/cs184project-webpages/proj2/images/task5/task5-before.png">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-before.png"  width = "350" height = "300">
 	<figcaption>mesh before some edge splits.</figcaption>
 	
-	<img src="/cs184project-webpages/proj2/images/task5/task5-after.png">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-after.png"  width = "350" height = "300">
 	<figcaption>mesh before some edge splits.</figcaption>
 	
 
 Here are screenshots of a mesh before and after a combination of both edge splits and edge flips.
-	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-2.png">
-	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-3.png">
-	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-4.png">
-	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-5.png">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-2.png"  width = "350" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-3.png"  width = "350" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-4.png"  width = "350" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task5/task5-complex-5.png"  width = "350" height = "300">
 
 Write about your eventful debugging journey, if you have experienced one.
 We got the implementation of edge split correct the first time.
