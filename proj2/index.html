@@ -34,21 +34,22 @@
 In simplicity, de Casteljau's algorithm computes the bezier curve by recursively taking input control points and linearly interpolating between adjacent control points with respect to parameter t, which contains a value of 0 to 1, to generate sub-control points. Finally, return the value of that point when the number of control points reaches 1.
 In our implementation we have done exactly that by iterating through adjacent vertices, points[i] and points[i + 1] and linearly interpolating by calling helper function lerp2 on parameter t. Then add the evaluated control point of the subcurve between, i.e the result of linear interpolation, to the list of sub-curves control points. Return the list of sub-curves control points to complete a step in the algorithm. Return the point if the number of control points is 1.
 <br>
-	Below are screenshots of each step / level of the evaluation from the original 6 control points down to the final evaluated point. <br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step1.png" width = "390" height = "300" >
+	Below are screenshots of each step / level of the evaluation from the original 6 control points down to the final evaluated point.
+	Note this file was created in bzc/custom.bzc<br>
+<img src="/cs184project-webpages/proj2/images/task1/task1-s1.png" width = "390" height = "300" >
 	<figcaption>step 1 of curve evaluation.</figcaption><br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step2.png" width = "390" height = "300">
+<img src="/cs184project-webpages/proj2/images/task1/task1-s2.png" width = "390" height = "300">
 	<figcaption>step 2 of curve evaluation.</figcaption><br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step3.png" width = "390" height = "300">
+<img src="/cs184project-webpages/proj2/images/task1/task1-s3.png" width = "390" height = "300">
 	<figcaption>step 3 of curve evaluation.</figcaption><br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step4.png" width = "390" height = "300">
+<img src="/cs184project-webpages/proj2/images/task1/task1-s4.png" width = "390" height = "300">
 	<figcaption>step 4 of curve evaluation.</figcaption><br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step5.png" width = "390" height = "300">
+<img src="/cs184project-webpages/proj2/images/task1/task1-s5.png" width = "390" height = "300">
 	<figcaption>step 5 of curve evaluation.</figcaption><br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-step5-full.png" width = "390" height = "300">
+<img src="/cs184project-webpages/proj2/images/task1/task1-full.png" width = "390" height = "300">
 	<figcaption>Bezier curve after 5 steps of curve evaluation.</figcaption><br>
-Below is a screenshot of a slightly different Bezier curve by moving the original control points around and modifying the parameter t via mouse scrolling.<br>
-<img src="/cs184project-webpages/proj2/images/task1/task1-modified-bezier.png" width = "390" height = "300">
+Below is a screenshot of a slightly different Bezier curve by moving the 4th original control points around and modifying the parameter t via mouse scrolling (up in this case).<br>
+<img src="/cs184project-webpages/proj2/images/task1/task1-movingcursor.png" width = "390" height = "300">
 	
 	<h1 style="font-size:150%;">Part 2: Bezier surfaces with separable 1D de Casteljau</h1>	
 	<h1 style="font-size:100%;">Extending de Casteljau algorithm to Bezier surfaces and its implementation</h1>
