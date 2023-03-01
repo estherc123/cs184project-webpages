@@ -87,5 +87,32 @@ Here are screenshots of a mesh before and after a combination of both edge split
 
 We got the implementation of edge split correct the first time :D
 
+	<h1 style="font-size:150%;">Part 6: Loop subdivision for mesh upsampling</h1>	
+	<h1 style="font-size:100%;">implementation of the loop subdivision and interesting implementation / debugging tricks we have used</h1>
+How I implemented loop subdivision: Our loop subdivision algorithm first calculates each of the new positions of newly created vertices as well as old vertices and then does the splitting edges and edge flipping operation to get 4 sub-triangles. The new position stores the position after the loop subdivision transformation. This is done by first calculating the new position of new vertices formed by splitting (midpoint of an old edge), but we don’t actually do the split operation here, and have it depend on the positions of 4 neighboring vertices. Next, the new position of the old vertices are calculated by the number of degrees it has and the sum of the position of neighboring vertices. Then, we do the edge split operation on all the old edges and flip any edges that are new edges and that exactly one of the vertices is new and one is old. Lastly, assign the actual positions of all vertices to the newly transformed positions calculated in the first two steps.
+Debugging tricks: Most of our correctness implementations are based on meticulous design and then code implementation. An interesting observation is that bean.dae looked somewhat correct in our initial implementation but looked like there was some overlap. The overlap as well as some help from Ed allowed us to determine that the issue was that of calculating the result of the new position must be correctly evaluated as a floating-point value and not an integer.
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop1.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop2.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop3.png"  width = "400" height = "300">
+	<h1 style="font-size:100%;">Observations on how meshes behave after loop subdivision: sharp corners and edges</h1>
+Behavior: As the mesh applies subdivision there will obviously be more triangles and the mesh becomes somewhat more “round”. <br>
+Sharp corners and Edges: For sharp edges, the edges are laid as a basis for the small triangles. For sharp corners, you can see the edges that make up somewhat like a rotated hexagon and for higher iterations of loop subdivision, you can actually see bumps rather than truly spherical ones.<br>
+Can this effect be reduced by pre-splitting: I do not think that pre-splitting eliminates the effects of the sharp corners. Even if you try to do some sort of split operation before loop subdivision, the fact remains that the sharp edge is pointy. 
+
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop0.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop1.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop2.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop3.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-even-degrees.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-odd-degrees.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-pre-top.png"  width = "400" height = "300">
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-post-top.png"  width = "400" height = "300">
+	
+	<h1 style="font-size:100%;">Asymmetry on loop subdivision for the cube</h1>
+Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. How can we pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? <br>
+Explanation of asymmetry is present: When we subdivide the mesh, we expected that the mesh would morph into a cube with rounded corners, but instead, we see that the subdivision results in a curved edge that is short on one side and long on the other side. The reason why there is some asymmetry is the fact that for some vertices it has even degrees (number of neighboring vertices) and some have odd degrees. Since our algorithm calculates the new position of the old vertex based on the position of the neighboring vertices as well as the degrees. Thus, the position of vertices with even degrees are not symmetrical with odd degree vertices. 
+How pre-processing reduces the effect of asymmetry: We can achieve symmetry by splitting on the edges that lie on the middle of each face of the cube. Then loop subdivision will create a symmetrical mesh that resembles a rounded-corner cube. This reduces asymmetry because all the vertices have degree-6 and thus the position should be relatively symmetrical.
+	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-sym-normal.png"  width = "400" height = "300">
+	
 	</body>
 </html>
