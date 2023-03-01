@@ -1,13 +1,37 @@
 <html>
-<body>
-	<h1 style="font-size:150%;">Overview</h1>	
-	On a high level, we have implemented various operations on processing curves and surfaces: essentially, given points, either in 2D space or 3D space, we could model objects by either computing a continuous smooth curve/surface determined by these points, which is what we did in Section 1, or we could build a mesh with edges connecting these points, and this would look more “discrete”. The interesting thing I found in this project is the symmetric nature of the mesh and halfedge data structure, making traversing through complicated shapes incredibly straight-forward to implement. 
+<head>
+	<meta charset="UTF-8" />
+	<title>CS 162: Project 2 Spring 2023</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="description" content="" />
+	<link rel="icon" href="favicon.png">
+
+<!--	fonts-->
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+		body {
+			font-family: 'Tilt Neon', cursive;
+			color: #ffffff;
+			background-color: #000000;
+		}
+	</style>
+<!--	tailwind-->
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="m-5">
+	<div class="p-5 bg-slate-500 rounded">
+		<h1>CS 162 Project 2 Spring 2023</h1>
+		<h2>Eloy Ye & Esther Cai</h2>
+
+	</div>
+	<h1 style="font-size:150%;">Overview</h1>
+	On a high level, we have implemented various operations on processing curves and surfaces: essentially, given points, either in 2D space or 3D space, we could model objects by either computing a continuous smooth curve/surface determined by these points, which is what we did in Section 1, or we could build a mesh with edges connecting these points, and this would look more "discrete". The interesting thing I found in this project is the symmetric nature of the mesh and halfedge data structure, making traversing through complicated shapes incredibly straight-forward to implement.
 	
 	<h1 style="font-size:150%;">Part 1: Bezier curves with 1D de Casteljau subdivision</h1>	
 	<h1 style="font-size:100%;">de Casteljau's algorithm and its implementation</h1>
 	
 
-In simplicity, de Casteljau’s algorithm computes the bezier curve by recursively taking input control points and linearly interpolating between adjacent control points with respect to parameter t, which contains a value of 0 to 1, to generate sub-control points. Finally, return the value of that point when the number of control points reaches 1.
+In simplicity, de Casteljau's algorithm computes the bezier curve by recursively taking input control points and linearly interpolating between adjacent control points with respect to parameter t, which contains a value of 0 to 1, to generate sub-control points. Finally, return the value of that point when the number of control points reaches 1.
 In our implementation we have done exactly that by iterating through adjacent vertices, points[i] and points[i + 1] and linearly interpolating by calling helper function lerp2 on parameter t. Then add the evaluated control point of the subcurve between, i.e the result of linear interpolation, to the list of sub-curves control points. Return the list of sub-curves control points to complete a step in the algorithm. Return the point if the number of control points is 1.
 <br>
 	Below are screenshots of each step / level of the evaluation from the original 6 control points down to the final evaluated point. <br>
@@ -52,9 +76,8 @@ Here are screenshots of dae/teapot.dae comparing teapot shading with and without
 	<h1 style="font-size:150%;">Part 4: Edge flip</h1>
 	<h1 style="font-size:100%;">implementation of the edge flip operation</h1>
 
-<img src="/cs184project-webpages/proj2/images/task4/task4-diagram.png" width = "300" height = "350">
-	
-The implementation technique of edge flip is based on the “guide to implementing edge operations”. We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the flip and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Next, to flip the edge we have to reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above.<br>
+<img src="/cs184project-webpages/proj2/images/task4/task4-diagram.png" width = "300" height = "350"><br>
+The implementation technique of edge flip is based on the "guide to implementing edge operations". We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the flip and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Next, to flip the edge we have to reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above.<br>
 Here are the screenshots of the teapot before and after some edge flips.<br>
 <img src="/cs184project-webpages/proj2/images/task4/task4-before.png"  width = "390" height = "300">
 	<figcaption>teapot before some edge flips.</figcaption><br>
@@ -72,7 +95,7 @@ The major issue we have faced was whenever we tried to flip an edge, an edge and
 
 <img src="/cs184project-webpages/proj2/images/task5/task5-diagram.png"  width = "300" height = "350">
 	<figcaption>mesh before some edge splits.</figcaption><br>
-The implementation technique of edge split is based on the “guide to implementing edge operations”. We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the split and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Unlike edge flip, an edge split creates 1 new vertex, 3 new edges, 2 new faces, and 6 new half-edges. Then reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above and ensure that the faces and next pointer of the half-edges of the outer elements are preserved. <br>
+The implementation technique of edge split is based on the "guide to implementing edge operations". We first layout explicit definitions of all the half-edges, vertices, edges, and faces before the split and this can be done by laying out the half edge of the given edge and traversing to get all half-edges including the outer edges using half-edge operations next() and twin(). Note that the outer edges are defined by the twin of the edges of the inside faces. Also note that assigning the vertices, edges, and faces to a corresponding half-edge pointer is not unique. Unlike edge flip, an edge split creates 1 new vertex, 3 new edges, 2 new faces, and 6 new half-edges. Then reassign existing half-edges, vertices, edges, and faces’ pointers to match the new layout as shown in the before and after diagram above and ensure that the faces and next pointer of the half-edges of the outer elements are preserved. <br>
 Here are screenshots of a mesh before and after some edge splits.<br>
 	<img src="/cs184project-webpages/proj2/images/task5/task5-before.png"  width = "390" height = "300">
 	<figcaption>mesh before some edge splits.</figcaption><br>
@@ -91,31 +114,43 @@ Here are screenshots of a mesh before and after a combination of both edge split
 We got the implementation of edge split correct the first time :D
 
 	<h1 style="font-size:150%;">Part 6: Loop subdivision for mesh upsampling</h1>	
-	<h1 style="font-size:100%;">implementation of the loop subdivision and interesting implementation / debugging tricks we have used</h1>
+	<h1 style="font-size:100%;">Implementation of the loop subdivision and interesting implementation / debugging tricks we have used</h1>
+	<p>
 How I implemented loop subdivision: Our loop subdivision algorithm first calculates each of the new positions of newly created vertices as well as old vertices and then does the splitting edges and edge flipping operation to get 4 sub-triangles. The new position stores the position after the loop subdivision transformation. This is done by first calculating the new position of new vertices formed by splitting (midpoint of an old edge), but we don’t actually do the split operation here, and have it depend on the positions of 4 neighboring vertices. Next, the new position of the old vertices are calculated by the number of degrees it has and the sum of the position of neighboring vertices. Then, we do the edge split operation on all the old edges and flip any edges that are new edges and that exactly one of the vertices is new and one is old. Lastly, assign the actual positions of all vertices to the newly transformed positions calculated in the first two steps.
 Debugging tricks: Most of our correctness implementations are based on meticulous design and then code implementation. An interesting observation is that bean.dae looked somewhat correct in our initial implementation but looked like there was some overlap. The overlap as well as some help from Ed allowed us to determine that the issue was that of calculating the result of the new position must be correctly evaluated as a floating-point value and not an integer.
+	</p>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop1.png"  width = "400" height = "300">
+	<figcaption>First Subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop2.png"  width = "400" height = "300">
+	<figcaption>Second Subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q1-loop3.png"  width = "400" height = "300">
+	<figcaption>Third Subdivision</figcaption><br>
 	<h1 style="font-size:100%;">Observations on how meshes behave after loop subdivision: sharp corners and edges</h1>
-Behavior: As the mesh applies subdivision there will obviously be more triangles and the mesh becomes somewhat more “round”. <br>
+Behavior: As the mesh applies subdivision there will obviously be more triangles and the mesh becomes somewhat more "round". <br>
 Sharp corners and Edges: For sharp edges, the edges are laid as a basis for the small triangles. For sharp corners, you can see the edges that make up somewhat like a rotated hexagon and for higher iterations of loop subdivision, you can actually see bumps rather than truly spherical ones.<br>
 Can this effect be reduced by pre-splitting: I do not think that pre-splitting eliminates the effects of the sharp corners. Even if you try to do some sort of split operation before loop subdivision, the fact remains that the sharp edge is pointy. 
 
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop0.png"  width = "400" height = "300">
+	<figcaption>Cube without Subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop1.png"  width = "400" height = "300">
+	<figcaption>First Subdivision of Cube</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop2.png"  width = "400" height = "300">
+	<figcaption>Second Subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-loop3.png"  width = "400" height = "300">
+	<figcaption>Third Subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-even-degrees.png"  width = "400" height = "300">
+	<figcaption>Here we can see that this vertex from the cube contains an even degree</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-odd-degrees.png"  width = "400" height = "300">
+	<figcaption>On the other hand, you have a vertex with an odd degree, different from the one above</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-pre-top.png"  width = "400" height = "300">
+	<figcaption>Here you can observe that the mesh is symmetrical before subdivision</figcaption><br>
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-post-top.png"  width = "400" height = "300">
-	
+	<figcaption>On the other hand, as you subdivide, you notice notice that increasing subdivision does not make the mesh even. This is due to the even and odd degree</figcaption><br>
 	<h1 style="font-size:100%;">Asymmetry on loop subdivision for the cube</h1>
 Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. How can we pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? <br>
 Explanation of asymmetry is present: When we subdivide the mesh, we expected that the mesh would morph into a cube with rounded corners, but instead, we see that the subdivision results in a curved edge that is short on one side and long on the other side. The reason why there is some asymmetry is the fact that for some vertices it has even degrees (number of neighboring vertices) and some have odd degrees. Since our algorithm calculates the new position of the old vertex based on the position of the neighboring vertices as well as the degrees. Thus, the position of vertices with even degrees are not symmetrical with odd degree vertices. 
 How pre-processing reduces the effect of asymmetry: We can achieve symmetry by splitting on the edges that lie on the middle of each face of the cube. Then loop subdivision will create a symmetrical mesh that resembles a rounded-corner cube. This reduces asymmetry because all the vertices have degree-6 and thus the position should be relatively symmetrical.
 	<img src="/cs184project-webpages/proj2/images/task6/task6-q2-sym-normal.png"  width = "400" height = "300">
-	
+	<figcaption>Cube with symmetry by splitting on the middle edges that lie on each face of the cube. This works because each vertex contains degree of 6</figcaption><br>
 	</body>
 </html>
