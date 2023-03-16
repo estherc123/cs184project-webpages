@@ -143,9 +143,91 @@
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
 			<h1 class="mb-5 text-3xl font-black">Part 4: Global Illumination</h1>
+			<div class="mb-5">
+				<h2 class="text-xl">Indirect Lighting Function Implementation</h2>
+				<p>In our implementation of the indirect lighting function, we use the function at_least_one_bounce_radience, which includes the direct illumination at this intersection point plus indirect illumination coming from another direction that we randomly sampled from. Note that the indirect illumination is the direct illumination coming from another surface that this ray previously interacted with physically.
+				</p>
+			</div>
+			<div class="mb-5">
+				<h2 class="text-xl">Direct Sampling and Global Illumination</h2>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_1.png" alt="">
+					<p> Direct Lighting using 1024 samples per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_100.png" alt="">
+					<p> Direct Lighting and indirect lighting for 1024 samples per pixel</p>
+				</div>
+			</div>
+			<div class="mb-5">
+				<h2 class="text-xl">Direct Sampling Only and Indirect Sampling Only</h2>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_1.png" alt="">
+					<p> Direct Lighting using 1024 samples per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/only_indirect.png" alt="">
+					<p> Only Indirect Lighting for 1024 samples per pixel</p>
+				</div>
+			</div>
+			<div class="mb-5">
+				<h2 class="text-xl">Global Illumination with maximum ray depth and Russian Roulette</h2>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_0.png" alt="">
+					<p> max depth is 0 would be just the light source</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_1.png" alt="">
+					<p> max depth is 1 would be direct light sampling from part 3</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_2.png" alt="">
+					<p> max depth is 2 is at most 2 bounces</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_3.png" alt="">
+					<p> max depth is 3</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/m_100.png" alt="">
+					<p> max depth is 100</p>
+				</div>
+			</div>
+			<div class="mb-5">
+				<h2 class="text-xl">Global Illumination with Samples per pixel</h2>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_1.png" alt="">
+					<p> 1 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_2.png" alt="">
+					<p> 2 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_4.png" alt="">
+					<p> 4 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_8.png" alt="">
+					<p> 8 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_16.png" alt="">
+					<p> 16 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_64.png" alt="">
+					<p> 64 sample per pixel</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part4/s_1024.png" alt="">
+					<p> 1024 sample per pixel</p>
+				</div>
+			</div>
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
 			<h1 class="mb-5 text-3xl font-black">Part 5: Adaptive Sampling</h1>
+
 		</div>
 	</body>
 </html>
