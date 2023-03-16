@@ -68,12 +68,78 @@
 			<h1 class="mb-5 text-3xl font-black">Part 2: Bounding Volume Hierarchy</h1>
 			<div class="mb-5">
 				<h2 class="text-xl">BVH Construction</h2>
-				<p>In our BVH construction algorithm, we use the recursive approach to construct the tree. In each recursive level, we first construct a bounding box and include all primitives in the iterator to the bounding box. The base case could be number of primitives less than max_leaf_size, if that’s the case, then this node is a leaf node and we update its start and end pointer. Then we split the primitives in the iterator by an axis. An axis is chosen by computing the average of every primitives’s centroid, and then we subtract this average of centroids with the centroid of the current bounding box to get the axis. After that we normalize the axis. Then we take the dot product of the axis, this would be the split point. For centroids of the primitives that are larger than the split point, we put them into the right child, and for centroids that are smaller than the split point, we put them into the left child. This could be interpreted as having a dividing plane with axis as its normal vector, and it passes through the average centroid point. Depending on how primitives are distributed in the bounding box, the normal vector points towards the direction that primitives are most concentrated, so this group of primitives could be put together as a child and thus increase the likelihood of ray hitting a primitive in the bounding box.</p>
-				<h2 class="text-xl"></h2>
+				<p class="mb-5">In our BVH construction algorithm, we use the recursive approach to construct the tree. In each recursive level, we first construct a bounding box and include all primitives in the iterator to the bounding box. The base case could be number of primitives less than max_leaf_size, if that’s the case, then this node is a leaf node and we update its start and end pointer. Then we split the primitives in the iterator by an axis. An axis is chosen by computing the average of every primitives’s centroid, and then we subtract this average of centroids with the centroid of the current bounding box to get the axis. After that we normalize the axis. Then we take the dot product of the axis, this would be the split point. For centroids of the primitives that are larger than the split point, we put them into the right child, and for centroids that are smaller than the split point, we put them into the left child. This could be interpreted as having a dividing plane with axis as its normal vector, and it passes through the average centroid point. Depending on how primitives are distributed in the bounding box, the normal vector points towards the direction that primitives are most concentrated, so this group of primitives could be put together as a child and thus increase the likelihood of ray hitting a primitive in the bounding box.</p>
+				<h2 class="text-xl">Performance Comparison with and without BVH acceleration</h2>
+				<div class="mb-5">
+<!--					images here-->
+				</div>
+				<p>In this analysis, we examine the renderer’s performance on cow.dae, maxplanck.dae and peter.dae before and after the BVH acceleration.  After the BVH acceleration, in our local machine, rendering maxplanck.dae takes 6.7824s to</p>
 			</div>
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
 			<h1 class="mb-5 text-3xl font-black">Part 3: Direct Illumination</h1>
+			<div class="mb-5">
+				<h2 class="text-xl">Direct Lighting Functions</h2>
+				<div class="mb-5">
+					<h3 class="text-lg">Hemisphere Sampling</h3>
+					<p>The idea is to sample from any given direction of a hemisphere in an intersection point. For hemisphere sampling of a camera cast of a ray and its intersection, we iterate through all the samples ( which is number of lights times number of samples of lights per light). For each sample, we sample the incoming solid angle and transform the angle from object coordinates to world coordinates and project a ray from the intersection to the direction of the solid angle. The idea is that we test if that ray is actually coming from a light source, otherwise it is not a light emitting object. This is done by taking a monte carlo integration of the reflection equation which requires the BRDF value of the intersection with the incoming solid angles of the light and reflection, emission value of the light, and account for Lambert’s cosine law. Since it is a uniform hemisphere sampling, the pdf is 1/2*pi. Hence remember to multiply by 2*pi over the averaged sum.
+					</p>
+				</div>
+				<div class="mb-5">
+					<h3 class="text-lg">Importance Sampling</h3>
+					<p>The idea of importance sampling is that we sample over the lights rather than from a random direction. We first iterate through all the lights of a given scene and for each light we sample the radiance of a random light point to where the input casted ray intersects (hit_p). Then we create a shadow ray that starts from the intersected point (hit_p) to the direction of the light. We then test if there are any intersections between the hit_p and the light and if there is, then hit_p is blocked by another primitive and so the point receives no light from the sampled light. Otherwise, compute the Monte Carlo integration over the reflection equation and only sample once if the light is from a point light source.
+					</p>
+				</div>
+				<div class="mb-5">
+					We take the sum of the zero bounce and one bounce radiance to account for the source of the light as well.
+				</div>
+			</div>
+			<div class="mb-5">
+				<h1 class="text-lg"> Hemisphere vs Light Sampling Method</h1>
+				<!--					images here-->
+				<div class="mb-5 rounded">
+					<img src="./img/part3/CBbunny_hemi_1_1.png" alt="">
+					<p>Hemisphere Sampling, 1 camera ray per pixel and 1 light ray</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/CBbunny_imp_1_1.png" alt="">
+					<p>Importance Sampling, 1 camera ray per pixel and 1 light ray</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/spheres_64_32_hemi.png" alt="">
+					<p>Hemisphere Sampling, 64 camera ray per pixel and 32 light ray</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/spheres_64_32_imp.png" alt="">
+					<p>Importance Sampling, 64 camera ray per pixel and 32 light ray</p>
+				</div>
+				<p>As you can see, the hemisphere sampling contains more noise and generally converges to a satisfactory value much slower than the light sampling method.
+				</p>
+			</div>
+			<div class="mb-5">
+				<h1 class="text-lg">Analysis of Light Sampling</h1>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/bunny_1_1.png" alt="">
+					<p>Importance Sampling, 1 camera ray per pixel and 1 light ray; you can see that the soft shadows have a lot of noise</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/bunny_1_4.png" alt="">
+					<p>Importance Sampling, 1 camera ray per pixel and 4 light rays; some improvement on soft shadows </p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/bunny_1_16.png" alt="">
+					<p>Importance Sampling, 1 camera ray per pixel and 16 light rays; Getting better</p>
+				</div>
+				<div class="mb-5 rounded">
+					<img src="./img/part3/bunny_1_64.png" alt="">
+					<p>Importance Sampling, 1 camera ray per pixel and 64 light rays; decently soft shadows</p>
+				</div>
+			</div>
+			<div class="mb-5">
+				<h1 class="text-lg">Results between uniform hemisphere sampling and lighting sampling</h1>
+				<p>As we can see with the bunny and the sphere image, for lower number of  light rays and lower number of camera rays, the hemisphere sampling tends to look more “noisy” compared to light sampling. You can see that the walls, the bunny, and the shadows tend to be dark in pixels that shouldn’t be there, this is because when sampling uniformly from the hemisphere, the odds of detecting a ray coming from a light is lower than just testing from a light to the camera intersection point. (bunny_64_64 and bunny_64_64_hemi) Even with 64 camera rays and 64 light rays, the uniform hemisphere sampling still has some grainy picture in it so we expect that even more camera rays and light rays are needed for both images to somehow converge.
+				</p>
+			</div>
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
 			<h1 class="mb-5 text-3xl font-black">Part 4: Global Illumination</h1>
