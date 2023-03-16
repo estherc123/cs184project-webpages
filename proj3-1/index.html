@@ -227,7 +227,26 @@
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
 			<h1 class="mb-5 text-3xl font-black">Part 5: Adaptive Sampling</h1>
-
+			<div class="mb-5">
+				<h2 class="text-xl text-bold">Adaptive Sampling and its implementation</h2>
+				<p>Adaptive sampling is a heuristic method using statistical methods of determining the least possible number of ray samples needed for pixel convergence. This is done by first iterating through a loop incrementing by “samples per batches” until ns_aa (total fixed input samples per pixel). Then iterate from 0 to “samples per batches” to sample a ray in the pixel coordinate (x,y). Then calculate the mean, variance, and the standard deviation of the illuminance. We can then calculate the measure of pixel convergence: I = 1.96 * std/sqrt(n). Then, after sampling all the batches, we check the convergence condition: I <= max_tolerance * mean and if so, break from the loop as we have reached convergence. This is to ensure that we don’t handle control flows for every sample and thus reduce the number of branch predictions which are expensive. Outside the loop, we handle the case at the end where the ns_aa is not a multiple of “samples per batch” and thus we need to check for the rest and this time we do check the convergence condition for each sample. Then the rest if just outputting the average radiance.</p>
+			</div>
+			<div class="mb-5">
+				<div class="mb-5 rounded">
+					<div>
+						<img src="./img/part5/CBspheres_lambertian.png" alt="">
+						<img src="./img/part5/CBspheres_lambertian_rate.png" alt="">
+					</div>
+					<p> This was sampled at a rate of 2048 samples per pixel,  1 light ray, and 5 ray depth. We can see that for the sphere, usually the brighter areas converge quicker while darker areas need to converge much slower. This makes sense because areas with direct lighting have incremental change in illumination while darker areas tend to matter more.</p>
+				</div>
+				<div class="mb-5 rounded">
+					<div>
+						<img src="./img/part5/dragon.png" alt="">
+						<img src="./img/part5/dragon_rate.png" alt="">
+					</div>
+					<p>Similar effect for CB dragons sampling the same rate of 2048 samples per pixel,  1 light ray, and 5 ray depth. This time, the convergence tends to be higher for areas that you could say are somewhat concave, or areas that are somewhat in the pockets of light. </p>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
