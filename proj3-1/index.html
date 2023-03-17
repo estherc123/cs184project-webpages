@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>CS 184: Project 2 Spring 2023</title>
+		<title>CS 184: Project 3 Spring 2023</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<meta name="description" content="" />
 		<link rel="icon" href="favicon.png">
@@ -71,42 +71,41 @@
 				<p class="mb-5">In our BVH construction algorithm, we use the recursive approach to construct the tree. In each recursive level, we first construct a bounding box and include all primitives in the iterator to the bounding box. The base case could be number of primitives less than max_leaf_size, if that’s the case, then this node is a leaf node and we update its start and end pointer. Then we split the primitives in the iterator by an axis. An axis is chosen by computing the average of every primitives’s centroid, and then we subtract this average of centroids with the centroid of the current bounding box to get the axis. After that we normalize the axis. Then we take the dot product of the axis, this would be the split point. For centroids of the primitives that are larger than the split point, we put them into the right child, and for centroids that are smaller than the split point, we put them into the left child. This could be interpreted as having a dividing plane with axis as its normal vector, and it passes through the average centroid point. Depending on how primitives are distributed in the bounding box, the normal vector points towards the direction that primitives are most concentrated, so this group of primitives could be put together as a child and thus increase the likelihood of ray hitting a primitive in the bounding box.</p>
 				<h2 class="text-xl">Performance Comparison with and without BVH acceleration</h2>
 				<div class="mb-5">
-<!--					TODO: Fill in the src attribute as well as caption-->
-<!--					images here-->
-					<img src="" alt="">
+
+					<img src="img/part2/lucy.png" alt="">
 					<p class="mb-2">
-<!--						caption here-->
+<!--						CBlucy.dae rendered with BVH acceleration
 					</p>
 				</div>
 
 				<div class="mb-5">
 					<!--					TODO: Fill in the src attribute as well as caption-->
 					<!--					images here-->
-					<img src="" alt="">
+					<img src="img/part2/peter.png" alt="">
 					<p class="mb-2">
-<!--						caption here-->
+<!--						peter.dae rendered with BVH acceleration
 					</p>
 				</div>
 
 				<div class="mb-5">
 					<!--					TODO: Fill in the src attribute as well as caption-->
 					<!--					images here-->
-					<img src="" alt="">
+					<img src="img/part2/planck.png" alt="">
 					<p class="mb-2">
-						<!--						caption here-->
+						planck.dae rendered with BVH acceleration
 					</p>
 				</div>
 
 				<div class="mb-5">
 					<!--					TODO: Fill in the src attribute as well as caption-->
 					<!--					images here-->
-					<img src="" alt="">
+					<img src="img/part2/cow.png" alt="">
 					<p class="mb-2">
-						<!--						caption here-->
+						cow.dae rendered with BVH acceleration
 					</p>
 				</div>
 
-				<p>In this analysis, we examine the renderer’s performance on cow.dae, maxplanck.dae and peter.dae before and after the BVH acceleration.  After the BVH acceleration, in our local machine, rendering maxplanck.dae takes 6.7824s to</p>
+				<p>We examined the renderer’s performance on cow.dae, maxplanck.dae and peter.dae before and after the BVH acceleration.  After the BVH acceleration, in our local machine, rendering maxplanck.dae takes 0.1128s to complete with average 2.915036 intersection tests per ray, contrast to before BVH acceleration which takes 382.4961s to complete with average 12572.849 intersection tests per ray, which is 3390 times faster in performance. Rendering cow.dae takes 0.1252s to complete with average 3.4320 intersection tests per ray, contrast to before BVH acceleration which takes 42.5647s to complete with average intersection tests per ray, which is 339 times faster in performance. Rendering peter.dae takes 0.1432s to complete with average 4.142160 intersection tests per ray, contrast to before BVH acceleration which takes 295.3539s to complete with average 10238.053146 intersection tests per ray, which is 2062 times faster in performance. In general, BVH acceleration has a very notable improvement on speed performance. </p>
 			</div>
 		</div>
 		<div class="m-32 p-12 bg-slate-800 rounded">
