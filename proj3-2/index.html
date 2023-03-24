@@ -1,7 +1,195 @@
 <html>
 	<head>
+		<meta charset="UTF-8" />
+		<title>CS 184: Project 3 Spring 2023</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta name="description" content="" />
+		<link rel="icon" href="favicon.png">
+
+		<!--	fonts-->
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+			body {
+				font-family: 'Tilt Neon', cursive;
+				color: #ffffff;
+				background-color: #000000;
+			}
+		</style>
+		<!--	tailwind-->
+		<script src="https://cdn.tailwindcss.com"></script>
 	</head>
 	<body>
-		Project 3-2 here
+		<div class="p-5 bg-slate-500 rounded">
+			<h1>CS 184 Project 3-2 Spring 2023</h1>
+			<h2>Eloy Ye & Esther Cai</h2>
+		</div>
+		<div class="m-32 p-12 bg-slate-800 rounded">
+			<h1 class="mb-5 text-3xl font-black">Overview</h1>
+			<p>For the first part of the project, we are interested in creating reflective, refractive, and glass surfaces. This is done by calculating the BRDF of each of the surfaces. The reflective and the refraction does not have a lambertian fallout for its illuminance. For the glass surfaces it is a mixture of some reflective and mostly refractive material that are proportionally weighted based on the Schlick’s reflection coefficient.
+
+In the second part of the project, we implemented microfacet models of isotropic rough conductor surfaces that only reflect.  We first need to compute the BRDF of the metal surface, which is dependent on the half vector h between view vector and incident light. Then we assume the surface normal is approximately normally distributed, and the distribution is dependent on the roughness of surface. Using importance sampling for incoming light direction,  along with Fresnel’s term and the shadow-masking term, we could then compute the BRDF, and thus render a pretty metallic surface.
+</p>
+		</div>
+		<div class="m-32 p-12 bg-slate-800 rounded">
+			<h1 class="mb-5 text-3xl font-black">Part 1</h1>
+			<div class="mb-5">
+				<h2 class="text-xl">Implementation</h2>
+				<p>In this section we have implemented the reflection function, in which essentially light incoming at a solid angle towards a surface will bounce at an angle symmetrical with respect to the surface normal in object space. Then we have implemented BRDF of glass material to have a deterministic trajectory given a sampled input solid angle and that there is no lambertian tradeoff so we multiply by absolute cos(theta). Then we implemented refraction which will check whether or not the light is entering at a solid angle or exiting the solid angle and determine the wi solid angle direction. Using the refraction function we can implement BRDF of refractive materials by accounting for no lambertian tradeoff and accounting for radiance concentration/dispersion behavior. Then for glass materials, it is a combination of reflection and refraction. First check whether it has total internal reflection so it will act as a reflective surface. Otherwise we use an approximation of the Schlick’s reflection coefficient (R) to give a coin-flip probability of ray reflecting or refracting with the pdf being R and 1 - R respectively.
+</p>
+			</div>
+			<div class="mb-5">
+				<h2 class="text-xl">Images</h2>
+				<p>Each of the spheres are rendered with 65 samples per pixel and 4 samples per light.</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_0.png" alt="">
+					<p class="mb-2">
+					zero bounce means that only the direct light are shown,  means that only the light that appear are the light sources.
+					</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_1.png" alt="">
+					<p class="mb-2">
+					at most single bounce means that the rest of the scene is illuminated but the spheres do not reflect or refract.The reflective ball is black because the light ray only makes contact with the sphere and samples the light and not the surrounding areas.
+
+
+					</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_2.png" alt="">
+					<p class="mb-2">
+					at most 2 bounces shows reflection of the spheres, for the glass sphere you can notice that there is a rather noisy highlight also due to some chance in reflecting. You can see that the ceiling is dark for the reflection sphere.
+					The reflection of the ball is shown in the reflective sphere and partially on the glass sphere because the second bounce from the sampled camera ray’s intersection accounts for light incoming from not just the light source directly but from a specific solid angle, in this case resulting in reflection phenomenon. You can see a similar effect for glass spheres because some rays are reflected and some are refracted.
+
+					</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_3.png" alt="">
+					<p class="mb-2">
+					at most 3 bounces shows glass refracting, including some particularly bright spots in shadows. There are some visible reflection of indirect light from the ceiling for the reflective sphere.
+					To understand why the glass sphere’s refraction appears in at most 3 bounces we will analyze the bounces. For the 0th bounce, the sampled camera ray intersects the glass sphere. For the 1st bounce, only the light sources are significant. For the second bounce, at the point of intersection of the camera ray and the glass sphere, some of the incoming radiance should come from inside the sphere but then the additional bounce means that the incoming radiance must come outside the glass sphere. Thus the sphere refracts rather than appearing black. There is a particularly bright spot on the sphere’s shadows because the property of refraction is that the direct light that gets refracted does not scatter in a random direction but to a specific path. In other words, the trajectory of the light ray enters the sphere from the top, exits the sphere on the bottom, and then bounces off from the bottom of the floor and is captured by the camera.
+
+					</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_4.png" alt="">
+					<img src="img/part1/spheres_m_4_highlight_spot.png" alt="">
+					<p class="mb-2">
+					at most 4 bounces shows the glass sphere reflecting a spot of light onto the wall.
+					One thing to note is that the light is concentrated in a particular area of the wall, which means that some of the light must have refracted from the sphere. I hypothesize that this light appears due to first the reflection of the source light to the reflective sphere and enters the refractive sphere, exits, to the particular region of the wall and then finally back at the camera. I initially thought that maybe the small patch of light came from the bright shadow as observed in the previous part, but the light should bounce randomly rather than a fixed path.
+
+					</p>
+			</div>
+			
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_5.png" alt="">
+					<p class="mb-2">
+					at most 5 bounces has some diminishing effects such as the glass sphere being slightly brighter than at most 4 bounces.
+					More bounces means that the amount of illumination is at least as much as 4 bounces and thus appears brighter.
+
+					</p>
+			</div>
+			<div class="mb-5">
+
+					<img src="img/part1/spheres_m_100.png" alt="">
+					
+					<p class="mb-2">
+					Similar effect as m increases, the glass sphere get a little bit brighter.
+					More bounces means that the amount of illumination is at least as much as 4 bounces and therefore appears brighter.
+					</p>
+			</div>
+		</div>
+		<div class="m-32 p-12 bg-slate-800 rounded">
+			<h1 class="mb-5 text-3xl font-black">Part 2</h1>
+			<div class="mb-5">
+				<h2 class="text-xl">Implementation</h2>
+				<p class="mb-5">In this part of the project, we implemented the BRDF of the metallic surface. For computing the BRDF, we need half vector h between view vector and incident light. Then we assume the surface normal is approximately normally distributed, and the distribution is dependent on the roughness of surface, specifically, it’s alpha in .dae file of our model. Using importance sampling for incoming light direction,  along with Fresnel’s term and the shadow-masking term, we could then compute the BRDF, and thus render a pretty metallic surface. </p>
+				<h2 class="text-xl">screenshot sequence of 4 images of scene CBdragon_microfacet_au.dae rendered with α set to 0.005, 0.05, 0.25 and 0.5</h2>
+				<div class="mb-5">
+
+					<img src="img/part2/CBdragon_0005.png" alt="">
+					<p class="mb-2">
+					alpha value of 0.005
+					</p>
+				</div>
+
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBdragon_005.png" alt="">
+					<p class="mb-2">
+					alpha value of 0.05
+					</p>
+				</div>
+
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBdragon_025.png" alt="">
+					<p class="mb-2">
+					alpha value of 0.25
+					</p>
+				</div>
+				
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBdragon_05.png" alt="">
+					<p class="mb-2">
+					alpha value of 0.5
+					</p>
+				</div>
+
+				
+				
+
+				<p>For alpha value of 0.005, we could see that the reflection of light is thin and has sharper edges, and there are a few white noises over the entire screen, this is because when there's a low alpha value, the material is much glossier/specular which causes more specularity in the image. We could clearly see the color and structure of the surroundings from the dragon. For alpha value of 0.05, the bright reflection spot has larger area, and a much more smoother edge, and there are almost no noise compared to the rendered image with alpha value of 0.005. We could still tell the color and structure of the walls from the dragon. For alpha value of 0.25, the reflection spot’s area is even larger, though with lower brightness compared to the reflection spot from alpha values of 0.005 and 0.05. Color of the wall is still visible, but much fainter and we couldn’t get much information of the structure of the room by just looking at the dragon. The dragon itself seems brighter as a whole, because the light fall-off rate relative to the view angle is lower. For alpha value of 0.5, the dragon is even brighter as a whole, and the boundary of the reflected light is more blurry, and it does not almost any surrounding color.</p>
+				<h2 class="text-xl"> Images of scene CBbunny_microfacet_cu.dae rendered using cosine hemisphere sampling (default) and our importance sampling</h2>
+				<p class="mb-5">While the rendered bunny with importance sampling is smooth and basically noise-free, for cosine hemisphere sampling, there are lots of noise on the surface of the bunny. The amount of noise on the room is the same, though. </p>
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBbunny_importance.png" alt="">
+					<p class="mb-2">
+					rendered bunny with importance sampling
+					</p>
+				</div>
+				
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBbunny_cosine_hemisphere.png" alt="">
+					<p class="mb-2">
+					rendered bunny with cosine hemisphere sampling
+					</p>
+				</div>
+				
+				<h2 class="text-xl"> Mercury dragon</h2>
+				
+				<div class="mb-5">
+					<!--					TODO: Fill in the src attribute as well as caption-->
+					<!--					images here-->
+					<img src="img/part2/CBdragon_hg.png" alt="">
+					<p class="mb-2">
+
+					</p>
+				</div>
+				
+				<p class="mb-5">The new parameters for eta are 1.8795, 1.5472 and 1.13534 for wave length 614nm, 549 nm and 466 nm; new parameters for k are 5.1076, 4.6437 and 3.9980 for wave length 614nm, 549 nm and 466 nm. These parameters correspond to Mercury, which is liquid under room temperature. So our dragon is either in liquid form or it’s solid but inside a room of -38.83°C.😎</p>
+
+			</div>
+		</div>
+		
 	</body>
 </html>
