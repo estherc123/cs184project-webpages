@@ -155,39 +155,42 @@ In the second part of the project, we implemented microfacet models of isotropic
 				
 
 				<p>For alpha value of 0.005, we could see that the reflection of light is thin and has sharper edges, and there are a few white noises over the entire screen, this is because when there's a low alpha value, the material is much glossier/specular which causes more specularity in the image. We could clearly see the color and structure of the surroundings from the dragon. For alpha value of 0.05, the bright reflection spot has larger area, and a much more smoother edge, and there are almost no noise compared to the rendered image with alpha value of 0.005. We could still tell the color and structure of the walls from the dragon. For alpha value of 0.25, the reflection spot’s area is even larger, though with lower brightness compared to the reflection spot from alpha values of 0.005 and 0.05. Color of the wall is still visible, but much fainter and we couldn’t get much information of the structure of the room by just looking at the dragon. The dragon itself seems brighter as a whole, because the light fall-off rate relative to the view angle is lower. For alpha value of 0.5, the dragon is even brighter as a whole, and the boundary of the reflected light is more blurry, and it does not almost any surrounding color.</p>
-				<h2 class="text-xl"> Images of scene CBbunny_microfacet_cu.dae rendered using cosine hemisphere sampling (default) and our importance sampling</h2>
-				<p class="mb-5">While the rendered bunny with importance sampling is smooth and basically noise-free, for cosine hemisphere sampling, there are lots of noise on the surface of the bunny. The amount of noise on the room is the same, though. </p>
 				<div class="mb-5">
-					<!--					TODO: Fill in the src attribute as well as caption-->
-					<!--					images here-->
-					<img src="img/part2/CBbunny_importance.png" alt="">
-					<p class="mb-2">
-					rendered bunny with importance sampling
-					</p>
-				</div>
+					<h2 class="text-xl"> Images of scene CBbunny_microfacet_cu.dae rendered using cosine hemisphere sampling (default) and our importance sampling</h2>
 				
-				<div class="mb-5">
-					<!--					TODO: Fill in the src attribute as well as caption-->
-					<!--					images here-->
-					<img src="img/part2/CBbunny_cosine_hemisphere.png" alt="">
-					<p class="mb-2">
-					rendered bunny with cosine hemisphere sampling
-					</p>
-				</div>
+					<div class="mb-5">
+						<!--					TODO: Fill in the src attribute as well as caption-->
+						<!--					images here-->
+						<img src="img/part2/CBbunny_importance.png" alt="">
+						<p class="mb-2">
+						rendered bunny with importance sampling
+						</p>
+					</div>
 				
-				<h2 class="text-xl"> Mercury dragon</h2>
-				
-				<div class="mb-5">
-					<!--					TODO: Fill in the src attribute as well as caption-->
-					<!--					images here-->
-					<img src="img/part2/CBdragon_hg.png" alt="">
-					<p class="mb-2">
+					<p class="mb-5">While the rendered bunny with importance sampling is smooth and basically noise-free, for cosine hemisphere sampling, there are lots of noise on the surface of the bunny. The amount of noise on the room is the same, though. </p>
 
-					</p>
+					<div class="mb-5">
+						<!--					TODO: Fill in the src attribute as well as caption-->
+						<!--					images here-->
+						<img src="img/part2/CBbunny_cosine_hemisphere.png" alt="">
+						<p class="mb-2">
+						rendered bunny with cosine hemisphere sampling
+						</p>
+					</div>
 				</div>
 				
-				<p class="mb-5">The new parameters for eta are 1.8795, 1.5472 and 1.13534 for wave length 614nm, 549 nm and 466 nm; new parameters for k are 5.1076, 4.6437 and 3.9980 for wave length 614nm, 549 nm and 466 nm. These parameters correspond to Mercury, which is liquid under room temperature. So our dragon is either in liquid form or it’s solid but inside a room of -38.83°C.😎</p>
-
+				<div class="mb-5">
+					<h2 class="text-xl"> Mercury dragon</h2>
+				
+					<div class="mb-5">
+						<!--					TODO: Fill in the src attribute as well as caption-->
+						<!--					images here-->
+						<img src="img/part2/CBdragon_hg.png" alt="">
+						
+					</div>
+				
+					<p class="mb-5">The new parameters for eta are 1.8795, 1.5472 and 1.13534 for wave length 614nm, 549 nm and 466 nm; new parameters for k are 5.1076, 4.6437 and 3.9980 for wave length 614nm, 549 nm and 466 nm. These parameters correspond to Mercury, which is liquid under room temperature. So our dragon is either in liquid form or it’s solid but inside a room of -38.83°C.😎</p>
+				</div>
 			</div>
 		</div>
 		
