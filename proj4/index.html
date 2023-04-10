@@ -34,6 +34,62 @@
 <!--	part 2-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
 		<h1 class="mb-5 text-3xl font-black">Part 2</h1>
+		<div class="m-3 p-3 bg-slate-600 rounded">
+			<img src="img/task2/resting_state_gif.gif" alt="state">
+			<p class="m-2">Default parameters of pinned2.png</p>
+		</div>
+		<p class="mb-5">In this section, we handled the physical cloth simulation by calculating the gravitational force as well as the spring force for each of the point masses of the cloth. Then for each timestep, update the position of the points through an approximation algorithm of the Verlet integration. Then we constrained the position updates such that  . Note that the default parameters are density of 15 g/cm^2 and a spring constant of 5000 N/m.</p>
+		<div class="mb-5 font-bold">
+			<h2 class="text-xl">
+				Spring density
+			</h2>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/density/high_density.png" alt="state">
+				<p class="m-2">A higher density creates more wrinkles than with lower density and some regions of the cloth significantly bounces more than the default parameters</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/density/low_density.png" alt="state">
+				<p class="m-2">Lower spring density you can see a lot less wrinkles than the previous default parameters.</p>
+			</div>
+		</div>
+		<div class="mb-5 font-bold">
+			<h2 class="text-xl">
+				Spring Constant
+			</h2>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/ks/high_spring_constant.png" alt="state">
+				<p class="m-2">For high spring constant, you can slightly notice that the cloth bounces a lot less than high spring constant.</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/ks/low_spring_constant.png" alt="state">
+				<p class="m-2">For the low spring constant value, you can notice that the cloth tends to move and bounce around more than the default spring constant of 5000 N/m.</p>
+			</div>
+		</div>
+		<div class="mb-5 font-bold">
+			<h2 class="text-xl">
+				Damping
+			</h2>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/resting_state_gif.gif" alt="state">
+				<p class="m-2">cloth animation showing cloth falling at density of 15 g/cm^2 and k_s value of 5000 N/m</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/damping/high_damping.gif" alt="state">
+				<p class="m-2">As you can see in the cloth with high damping, the time the cloth transitions to the end rest position is higher for higher damping than for the default parameters. This makes sense because the damping counteracts the force of gravity, making the cloth fall even longer.</p>
+			</div>
+		</div>
+		<div class="mb-5 font-bold">
+			<h2 class="text-xl">
+				Final Resting State of Cloth with 4 Pinned Corners
+			</h2>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/pinned_4_img1.png" alt="state">
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/pinned4_img2.png" alt="state">
+			</div>
+			<p>The two images below show the final resting state of the cloth with default parameters of density of 15 g/cm^2 and a spring constant of 5000 N/m.</p>
+		</div>
 	</div>
 <!--	part 3-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
