@@ -98,6 +98,15 @@
 <!--	part 4-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
 		<h1 class="mb-5 text-3xl font-black">Part 4</h1>
+		<h1 class="mb-5">
+			For project 4 we handled self-collision. That is, collision based on the contact of the same object but doing so such that the algorithm for self-collision does not depend quadratically with the amount of point masses. We can improve efficiently by partitioning in a similar fashion to the BVH bounding box. To do this, we first created hash algorithm to store a hashmap mapping a hash code of a particular 3D box to a list containing local mass points. Then for each timestep, we need to construct the 3D boxes to store the list of points. Lastly, handle the resulting displacement from self-collision.
+		</h1>
+		<div class="m-5">
+			<h1> Sequences of Cloth Falling </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task2/pinned_4_img1.png" alt="state">
+			</div>
+		</div>
 	</div>
 <!--	part 5-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
