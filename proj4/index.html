@@ -158,6 +158,33 @@
 <!--	part 5-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
 		<h1 class="mb-5 text-3xl font-black">Part 5: Shaders</h1>
+		<h1 class="mb-5">
+			Next, we are able to encode height maps into textures by computing the tangent-bitangent-normal transformation on the local space normal. Finally, we have implemented mirror surfaces by calculating the outgoing eye ray, its reflection ray, and sample on that reflection ray.
+		</h1>
+		<div class="m-5">
+			<h1 class="text-xl"> Bump Mapping </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task4/ks/high_ks.gif" alt="state">
+				<p class="m-2">A higher k_s has a much bigger folds compared to default cloth parameters and similar to a much lower density.</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/" alt="state">
+				<p class="m-2">A lower k_s has a significantly higher number of wrinkles only when the cloth makes contact with the surface and that the top of the cloth remains somewhat stable and does not fold.
+				</p>
+			</div>
+		</div>
+		<div class="m-5">
+			<h1 class="text-xl"> Displacement Mapping </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/" alt="state">
+				<p class="m-2">A higher k_s has a much bigger folds compared to default cloth parameters and similar to a much lower density.</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/" alt="state">
+				<p class="m-2">A lower k_s has a significantly higher number of wrinkles only when the cloth makes contact with the surface and that the top of the cloth remains somewhat stable and does not fold.
+				</p>
+			</div>
+		</div>
 	</div>
 	</body>
 </html>
