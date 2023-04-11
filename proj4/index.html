@@ -164,24 +164,77 @@
 		<div class="m-5">
 			<h1 class="text-xl"> Bump Mapping </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
-				<img src="img/task4/ks/high_ks.gif" alt="state">
-				<p class="m-2">A higher k_s has a much bigger folds compared to default cloth parameters and similar to a much lower density.</p>
+				<img src="img/task5/v4/bump/bump_sphere.png" alt="state">
+				<p class="m-2">Bump mapping on sphere. For Bump mapping, you can essentially create the illusion of depth without having to change the geometry of the sphere or the cloth. Nevertheless, you can see that the texture of the objects/mesh changes the surface normal to encode height map.
+				</p>
 			</div>
 			<div class="m-3 p-3 bg-slate-600 rounded">
-				<img src="img/task5/" alt="state">
-				<p class="m-2">A lower k_s has a significantly higher number of wrinkles only when the cloth makes contact with the surface and that the top of the cloth remains somewhat stable and does not fold.
+				<img src="img/task5/v4/bump/bump_cloth.png" alt="state">
+				<p class="m-2">
+					Bump mapping of cloth on sphere.
 				</p>
 			</div>
 		</div>
 		<div class="m-5">
 			<h1 class="text-xl"> Displacement Mapping </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
-				<img src="img/task5/" alt="state">
-				<p class="m-2">A higher k_s has a much bigger folds compared to default cloth parameters and similar to a much lower density.</p>
+				<img src="img/task5/v4/disp/displ_sphere.png" alt="state">
+				<p class="m-2">
+					Displacement mapping on sphere. On the other hand, displacement mapping does actually change the geometry of the texture, which means that the texture can also change some of the position of the vertices determined by the height map of the texture.
+				</p>
 			</div>
 			<div class="m-3 p-3 bg-slate-600 rounded">
-				<img src="img/task5/" alt="state">
-				<p class="m-2">A lower k_s has a significantly higher number of wrinkles only when the cloth makes contact with the surface and that the top of the cloth remains somewhat stable and does not fold.
+				<img src="img/task5/v4/disp/disp_cloth.png" alt="state">
+				<p class="m-2">
+					Displacement mapping of cloth on sphere. Note that constant height value is 0.02 rather than 0.01 because
+					the default value will result in the cloth being exagerratedly stretched.
+				</p>
+			</div>
+		</div>
+		<div class="m-5">
+			<h1 class="text-xl mb-3"> Coarseness </h1>
+			<p> For control variables, Bump mapping has normal value of 2 and height of 1. While displacement mapping has normal value of 100 and height of 0.02 </p>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v4/res/bump_16.png" alt="state">
+				<p class="m-2">
+					Bump mapping with resolution of 16x16. Observe the outline of the sphere, it is somewhat jagged and not round.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v4/res/bump_128.png" alt="state">
+				<p class="m-2">
+					Bump mapping with resolution of 128x128. It is not subtle, but the shadows of the sphere seems to be
+					more refined in higher resolution than in the previous image. You can also see that the ball is much
+					more rounder than the previous image.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v4/res/disp_16.png" alt="state">
+				<p class="m-2">
+					Displacement mapping with resolution of 16x16. Again, the outline of the sphere is jagged and not round.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v4/res/disp_128.png" alt="state">
+				<p class="m-2">
+					Displacement mapping with resolution of 128x128. The outline of the sphere is much more rounder than the previous image.
+					However, there is a much more visible difference for displacement mapping as increasing the resolution means that the height
+					mapping displacement is much more accurate and resembles criss cross effect.
+				</p>
+			</div>
+		</div>
+		<div class="m-5">
+			<h1 class="text-xl mb-3"> Environment-mapped reflections </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v5/sphere_reflect.png" alt="state">
+				<p class="m-2">
+					Reflection of sphere by sampling from the environment map.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v5/cloth_reflect.png" alt="state">
+				<p class="m-2">
+					Reflection of cloth by sampling from the environment map.
 				</p>
 			</div>
 		</div>
