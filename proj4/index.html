@@ -29,11 +29,11 @@
 	</div>
 <!--	part 1-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
-		<h1 class="mb-5 text-3xl font-black">Part 1</h1>
+		<h1 class="mb-5 text-3xl font-black">Part 1: Masses and Springs</h1>
 	</div>
 <!--	part 2-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
-		<h1 class="mb-5 text-3xl font-black">Part 2</h1>
+		<h1 class="mb-5 text-3xl font-black">Part 2: Simulation via Numerical Integration</h1>
 		<div class="m-3 p-3 bg-slate-600 rounded">
 			<img src="img/task2/resting_state_gif.gif" alt="state">
 			<p class="m-2">Default parameters of pinned2.png</p>
@@ -41,7 +41,7 @@
 		<p class="mb-5">In this section, we handled the physical cloth simulation by calculating the gravitational force as well as the spring force for each of the point masses of the cloth. Then for each timestep, update the position of the points through an approximation algorithm of the Verlet integration. Then we constrained the position updates such that  . Note that the default parameters are density of 15 g/cm^2 and a spring constant of 5000 N/m.</p>
 		<div class="mb-5 font-bold">
 			<h2 class="text-xl">
-				Spring density
+				Spring density's Effect on Cloth
 			</h2>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task2/density/high_density.png" alt="state">
@@ -54,7 +54,7 @@
 		</div>
 		<div class="mb-5 font-bold">
 			<h2 class="text-xl">
-				Spring Constant
+				Spring Constant's Effect on Cloth
 			</h2>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task2/ks/high_spring_constant.png" alt="state">
@@ -67,7 +67,7 @@
 		</div>
 		<div class="mb-5 font-bold">
 			<h2 class="text-xl">
-				Damping
+				Damping's Effect on Cloth
 			</h2>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task2/resting_state_gif.gif" alt="state">
@@ -80,7 +80,7 @@
 		</div>
 		<div class="mb-5 font-bold">
 			<h2 class="text-xl">
-				Final Resting State of Cloth with 4 Pinned Corners
+				Final Resting State of Cloth with 4 Pinned Corners using default parameters
 			</h2>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task2/pinned_4_img1.png" alt="state">
@@ -93,16 +93,16 @@
 	</div>
 <!--	part 3-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
-		<h1 class="mb-5 text-3xl font-black">Part 3</h1>
+		<h1 class="mb-5 text-3xl font-black">Part 3: Handling Collisions with Other Objects</h1>
 	</div>
 <!--	part 4-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
-		<h1 class="mb-5 text-3xl font-black">Part 4</h1>
+		<h1 class="mb-5 text-3xl font-black">Part 4: Handling Self-collisions</h1>
 		<h1 class="mb-5">
 			For project 4 we handled self-collision. That is, collision based on the contact of the same object but doing so such that the algorithm for self-collision does not depend quadratically with the amount of point masses. We can improve efficiently by partitioning in a similar fashion to the BVH bounding box. To do this, we first created hash algorithm to store a hashmap mapping a hash code of a particular 3D box to a list containing local mass points. Then for each timestep, we need to construct the 3D boxes to store the list of points. Lastly, handle the resulting displacement from self-collision.
 		</h1>
 		<div class="m-5">
-			<h1> Sequences of Cloth Falling </h1>
+			<h1 class="text-xl"> Sequences of Cloth Falling in default parameters </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task4/main/init.png" alt="state">
 				<p class="m-2">Cloth falling in initial timestep</p>
@@ -128,10 +128,36 @@
 				<p class="m-2">final resting state</p>
 			</div>
 		</div>
+		<div class="m-5">
+			<h1 class="text-xl"> Density's Effect on Self-Collision </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task4/density/highdensity.gif" alt="state">
+				<p class="m-2">For higher density cloth, there are more wrinkles as the cloth falls. There are more folds as the cloth falls down than the default</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task4/density/lowdensity.gif" alt="state">
+				<p class="m-2">For lower density cloth, Conversely for lower density there are a much bigger folds than default density cloth.
+				</p>
+			</div>
+		</div>
+
+		<div class="m-5">
+			<h1 class="text-xl"> Spring Constant's Effect on Self-Collision </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task4/ks/high_ks.gif" alt="state">
+				<p class="m-2">A higher k_s has a much bigger folds compared to default cloth parameters and similar to a much lower density.</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task4/ks/low_ks.gif" alt="state">
+				<p class="m-2">A lower k_s has a significantly higher number of wrinkles only when the cloth makes contact with the surface and that the top of the cloth remains somewhat stable and does not fold.
+				</p>
+			</div>
+		</div>
+
 	</div>
 <!--	part 5-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
-		<h1 class="mb-5 text-3xl font-black">Part 5</h1>
+		<h1 class="mb-5 text-3xl font-black">Part 5: Shaders</h1>
 	</div>
 	</body>
 </html>
