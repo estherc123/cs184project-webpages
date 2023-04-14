@@ -114,6 +114,36 @@
 <!--	part 3-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
 		<h1 class="mb-5 text-3xl font-black">Part 3: Handling Collisions with Other Objects</h1>
+		<div class="m-5">
+			<h1 class="text-xl"> Collision with a Sphere Under Different Spring Constants </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task3/ks_500.png" alt="state">
+				<p class="m-2">resting state with spring constant 500 N/m. </p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task3/ks_5000.png" alt="state">
+				<p class="m-2"> resting state with spring constant 5000 N/m.</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task3/ks_50000.png" alt="state">
+				<p class="m-2">resting state with spring constant 50000 N/m.</p>
+			</div>
+			
+			<p class="m-2">With a spring constant 500 N/m, the cloth looks very soft and silky, and its contacting area with the sphere is the largest. With a spring constant of 5000N/m, the cloth looks more stiff and has less folds than the previous one. With a spring constant of 50000 N/m, the cloth has even less folds, with least contacting area with the sphere. </p>
+			
+			
+		</div>
+		
+		<div class="m-5">
+			<h1 class="text-xl"> Collision with a Plane </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task3/resting_plane.png" alt="state">
+				<p class="m-2">cloth's resting state on the plane. Minecraft is the best. </p>
+			</div>
+
+			
+			
+		</div>
 	</div>
 <!--	part 4-->
 	<div class="m-32 p-12 bg-slate-800 rounded">
@@ -179,10 +209,71 @@
 	<div class="m-32 p-12 bg-slate-800 rounded">
 		<h1 class="mb-5 text-3xl font-black">Part 5: Shaders</h1>
 		<h1 class="mb-5">
+			The first three shaders are diffuse shading, bling-phong shading and texture mapping. We only work with .frag file of these shaders, in other words, we only change the color output of each vertex, by either incorporating viewing directions or sample from a texture map, but not the position of the vertex itself.  
 			Next, we are able to encode height maps into textures by computing the tangent-bitangent-normal transformation on the local space normal. Finally, we have implemented mirror surfaces by calculating the outgoing eye ray, its reflection ray, and sample on that reflection ray.
 		</h1>
 		<div class="m-5">
-			<h1 class="text-xl"> Bump Mapping </h1>
+			<h1 class="text-xl"> Shaders Overview </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v4/bump/bump_sphere.png" alt="state">
+				<p class="m-2">A shader program is a special type of rendering program that’s could be computed on a GPU. When a shader is executed, it operates on a single pixel at a time. The shader code that you write can only access and modify the properties of the current pixel being processed, such as its position, color, and texture coordinates.The output of the shader can be used to generate the final image by blending the results of all the pixels together. This blending process takes into account the contribution of each pixel to the final image, based on factors including the current position, tangent, normal and color. Execution on each position by a shader is independent of other positions. Such a property gives room for parallelism and thus perfect for executing on GPU. 
+Each shader has two parts, fragment and vertex, in the form of .frag and .vert.
+Vertex shaders are responsible for processing individual vertices of a 3D model. They take input attributes, such as the position, normal, color, and texture coordinates of each vertex, and transform them according to a set of mathematical operations. The output of a vertex shader is a new set of attributes that are interpolated across the surface of the 3D model and passed on to the fragment shader. it typically takes care of transforming the 3D model from its local space to the world space and the camera space. It may also perform additional calculations, such as normal mapping or skinning, to enhance the appearance of the model.
+
+
+Fragment shaders are responsible for processing individual pixels of a 3D model. They take the interpolated attributes from the vertex shader and use them to determine the final color and transparency of each pixel. This includes calculating lighting effects, such as diffuse, specular, and ambient lighting, as well as material effects, such as transparency, reflection, and refraction.
+it typically takes care of computing the final color of each pixel on the surface of the model. It uses the interpolated attributes from the vertex shader to calculate lighting and material effects and applies them to the color of the pixel.
+</p>
+			</div>
+		</div>
+		<div class="m-5">
+			<h1 class="text-xl"> Bling-Phong Shader </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/a/phone_diffuse.png" alt="state">
+				<p class="m-2">
+					With only diffuse shading.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/a/phone_specular.png" alt="state">
+				<p class="m-2">
+					With only specular shading.
+				</p>
+			</div>
+			
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/a/phong_ambient.png" alt="state">
+				<p class="m-2">
+					With only ambient shading.
+				</p>
+			</div>
+			
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/a/phong_enitre.png" alt="state">
+				<p class="m-2">
+					The entire Bling-Phong shading.
+				</p>
+				
+				<p class="m-2">
+					the Blinn-Phong model consists of three components: ambient, diffuse, and specular lighting. Ambient lighting is a uniform illumination that is present everywhere, whereas diffuse lighting simulates the way light scatters and spreads as it hits a surface. Specular lighting, on the other hand, models the way light reflects off a surface in a particular direction, giving it a shiny appearance.
+The model takes into account the angle between the surface normal and the light source direction, as well as the angle between the surface normal and the viewer direction, in order to calculate the intensity of each type of lighting.
+
+				</p>
+			</div>
+		</div>
+		
+		<div class="m-5">
+			<h1 class="text-xl"> Texture Mapping Shader </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/a/sheep.png" alt="state">
+				<p class="m-2">
+					This is what a sheep looks like in real life.
+				</p>
+			</div>
+		</div>
+		
+		<div class="m-5">
+			<h1 class="text-xl"> Bump Mapping Shader </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task5/v4/bump/bump_sphere.png" alt="state">
 				<p class="m-2">Bump mapping on sphere. For Bump mapping, you can essentially create the illusion of depth without having to change the geometry of the sphere or the cloth. Nevertheless, you can see that the texture of the objects/mesh changes the surface normal to encode height map.
@@ -196,7 +287,7 @@
 			</div>
 		</div>
 		<div class="m-5">
-			<h1 class="text-xl"> Displacement Mapping </h1>
+			<h1 class="text-xl"> Displacement Mapping Shader </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task5/v4/disp/displ_sphere.png" alt="state">
 				<p class="m-2">
@@ -244,7 +335,7 @@
 			</div>
 		</div>
 		<div class="m-5">
-			<h1 class="text-xl mb-3"> Environment-mapped reflections </h1>
+			<h1 class="text-xl mb-3"> Environment-mapped reflections Shader </h1>
 			<div class="m-3 p-3 bg-slate-600 rounded">
 				<img src="img/task5/v5/sphere_reflect.png" alt="state">
 				<p class="m-2">
@@ -255,6 +346,48 @@
 				<img src="img/task5/v5/cloth_reflect.png" alt="state">
 				<p class="m-2">
 					Reflection of cloth by sampling from the environment map.
+				</p>
+			</div>
+		</div>
+		
+		<div class="m-5">
+			<h1 class="text-xl mb-3"> Customized Ray-traced Mandelbulb Shader </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<p class="m-2">
+					We made two custom shaders, One only modifies .frag and uses the same .vert as the cloth and sphere combination, and the other modifies both .frag and .vert on the cloth and the sphere. Both shaders displays 3D mandelbulb patterns. We could only “project” 3D maldelbulb patterns on surfaces but could not modify the models into a 3D maldelbulb. The reason for that is because the generation formula for maldelbulb is recursive from the previous step, but shaders don’t get access to other positions besides current position, so it could not turn the sphere into a 3D mandelbulb. 
+
+However, inspired by a script from Shadertoy.com, we could view the surface of our sphere and cloth as a “screen”, and march rays onto the mandelbulb formula we defined. Here we don’t need to worry about recursion because eventhough each position is independent, we could still predefine the recursive calculation, and just let the ray hit this predefined structure to display the fractal.
+
+For the second shader, we added a deformation factor to the position of vertices in .vert, so that when the cloth is moving, it displays a very cool wave-like structure. 
+
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v6/mandelbulb_only_1.png" alt="state">
+				<p class="m-2">
+					view angle #1
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v6/mandelbulb_only_2.png" alt="state">
+				<p class="m-2">
+					view angle #2
+				</p>
+			</div>
+		</div>
+		
+		<div class="m-5">
+			<h1 class="text-xl mb-3"> Customized Chaotic-Possibly-Cthulu-Themed Ray-traced Mandelbulb Shader </h1>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v6/mandelbulb_sin.png" alt="state">
+				<p class="m-2">
+					Sin-shaped plane in motion.
+				</p>
+			</div>
+			<div class="m-3 p-3 bg-slate-600 rounded">
+				<img src="img/task5/v6/mandelbulb_sin_2.png" alt="state">
+				<p class="m-2">
+					Plane coming to rest.
 				</p>
 			</div>
 		</div>
